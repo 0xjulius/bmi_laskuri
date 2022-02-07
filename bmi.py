@@ -1,14 +1,18 @@
+import math
 nimi = input("Mikä on etunimesi?: ")
 print("Hei " + nimi.capitalize() + "!")
 pituus = float(input("Kuinka pitkä olet?: "))
 paino = float(input("Kuinka painava olet?: "))
 
+s_pituus = str(pituus)
+s_paino = str(paino)
+
 pituusM = pituus / 100
 pituuspow = math.pow(pituusM, 2.5)
 bmi = 1.3 * paino/pituuspow
 
-print("Pituutesi on " + str(pituus) + " senttimetriä.")
-print("Painosi on " + str(paino) + " kiloa.")
+print("Pituutesi on " + s_pituus + " senttimetriä.")
+print("Painosi on " + s_paino + " kiloa.")
 print("Painoindeksisi on: {:.2f}".format(bmi))
 
 if(bmi>0):
