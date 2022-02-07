@@ -4,7 +4,8 @@ pituus = float(input("Kuinka pitkä olet?: "))
 paino = float(input("Kuinka painava olet?: "))
 
 pituusM = pituus / 100
-bmi = paino/(pituusM*pituusM)
+pituuspow = math.pow(pituusM, 2.5)
+bmi = 1.3 * paino/pituuspow
 
 print("Pituutesi on " + str(pituus) + " senttimetriä.")
 print("Painosi on " + str(paino) + " kiloa.")
