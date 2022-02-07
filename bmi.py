@@ -11,15 +11,21 @@ print("Painosi on " + str(paino) + " kiloa.")
 print("Painoindeksisi on: {:.2f}".format(bmi))
 
 if(bmi>0):
-    if(bmi<=16):
-        print("Olet sairaalloisen alipainoinen. ")
-    elif(bmi<=18.5):
-        print("Olet alipainoinen. ")
-    elif(bmi<=25):
+    if(bmi<=14.9):
+        print("Olet sairaalloisen alipainoinen! ")
+    elif(bmi<=17.9):
+        print("Merkittävä alipaino! ")
+    elif(bmi<=18.9):
+        print("Lievä alipaino. ")
+    elif(bmi <= 24.9):
         print("Onnittelut! Olet normaalipainoinen.")
-    elif(bmi<=30):
+    elif(bmi<=29.9):
         print("Lievä lihavuus. ")
+    elif(bmi <= 34.9):
+        print("Merkittävä ylipaino. ")
+    elif(bmi <= 39.9):
+        print("Vaikea ylipaino. ")
     else:
-        print("Merkittävä lihavuus. ")
+        print("Sairaalloinen ylipaino. ")
 else:
     print("Syötä oikeat tiedot!!")
