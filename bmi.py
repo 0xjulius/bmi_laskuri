@@ -1,99 +1,134 @@
 import math
 
-nimi = input("Mikä on etunimesi?: ")
-print("Hei " + nimi.capitalize() + "!")
+name = input("Mikä on etunimesi?: ")
+print("Hei " + name.capitalize() + "!\n")
 
-# PITUUS
+# Pituus
 while True:
     try:
-        pituus_str = input("Kuinka pitkä olet?: ").replace(",", ".")
-        pituus = float(pituus_str)
-        if pituus <= 0:
+        height_str = input("Kuinka pitkä olet?: ").replace(",", ".")
+        height = float(height_str)
+        if height <= 0:
             print("Syötä positiivinen numero")
         else:
             break
     except ValueError:
         print("Ole hyvä ja syötä numeerinen arvo!")
+print("Pituudeksi on määritetty", height, "senttimetriä.\n")
 
-# PAINO
+# Paino
 while True:
     try:
-        paino_str = input("Kuinka painava olet?: ").replace(",", ".")
-        paino = float(paino_str)
-        if paino <= 0:
+        weight_str = input("Kuinka painava olet?: ").replace(",", ".")
+        weight = float(weight_str)
+        if weight <= 0:
             print("Syötä positiivinen numero")
         else:
             break
     except ValueError:
         print("Ole hyvä ja syötä numeerinen arvo!")
+print("Painoksi määritettiin", weight, "kiloa.\n")
+
+heightM = height / 100
+bmi = weight / (heightM * heightM)
+
+print("----------------------------------------\n")
+print("Painoindeksisi on tällä hetkellä: {:.2f}".format(bmi))
+
+if bmi > 0:
+    if bmi <= 14.9:
+        print("Olet sairaalloisen alipainoinen! \n")
+    elif bmi <= 17.9:
+        print("Merkittävä alipaino! \n")
+    elif bmi <= 18.9:
+        print("Lievä alipaino. \n")
+    elif bmi <= 24.9:
+        print("Onnittelut! Olet normaalipainoinen.\n")
+    elif bmi <= 29.9:
+        print("Sinulla on lievä lihavuus. \n")
+    elif bmi <= 34.9:
+        print("Merkittävä ylipaino. \n")
+    elif bmi <= 39.9:
+        print("Vaikea ylipaino. \n")
+    else:
+        print("Sairaalloinen ylipaino. \n")
+else:
+    print("Syötä oikeat tiedot!!\n")
+print("----------------------------------------\n")
 
 # TAVOITE
 while True:
     try:
-        tavoite_str = input("Mikä on ideaalipainosi (kg)?: ").replace(",", ".")
-        tavoite = float(tavoite_str)
-        if tavoite <= 0:
+        target_str = input("Mikä on ideaalipainosi (kg)?: ").replace(",", ".")
+        target = float(target_str)
+        if target <= 0:
             print("Syötä positiivinen numero.")
         else:
             break
     except ValueError:
         print("Ole hyvä ja syötä numeerinen arvo.")
+print("Tavoitepainoksi määritettiin", target, "kiloa.")
+
+target_weight = abs(weight - target)
+calories = target_weight * 7000
+
+if weight > target:
+    print("Haluat siis laihtua {:.2f} kiloa, joka on arviolta {:.2f} kaloria!\n".format(target_weight, calories))
+else:
+    print("Haluat nostaa painoasi {:.2f} kiloa, joten ohjelma lopetetaan.".format(target_weight))
+    exit()
 
 # ASKELEET
 while True:
     try:
-        askeleet_paivassa_str = input("Kuinka monta askelta haluat kävellä päivässä?: ").replace(",", ".")
-        askeleet_paivassa = float(askeleet_paivassa_str)
-        if askeleet_paivassa <= 0:
+        steps_per_day_str = input("Kuinka monta askelta haluat kävellä päivässä?: ").replace(",", ".")
+        steps_per_day = float(steps_per_day_str)
+        if steps_per_day <= 0:
             print("Syötä positiivinen kokonaisluku.")
         else:
             break
     except ValueError:
         print("Ole hyvä ja syötä kokonaisluku.")
 
-pituusM = pituus / 100
-bmi = paino / (pituusM * pituusM)
+print("Tavoitteeksi määritetty", steps_per_day, "askelta per päivä!\n")
 
-print("Pituutesi on", pituus, "senttimetriä.")
-print("Painosi on", paino, "kiloa.")
-print("Painoindeksisi on: {:.2f}".format(bmi))
-
-if bmi > 0:
-    if bmi <= 14.9:
-        print("Olet sairaalloisen alipainoinen! ")
-    elif bmi <= 17.9:
-        print("Merkittävä alipaino! ")
-    elif bmi <= 18.9:
-        print("Lievä alipaino. ")
-    elif bmi <= 24.9:
-        print("Onnittelut! Olet normaalipainoinen.")
-    elif bmi <= 29.9:
-        print("Sinulla on lievä lihavuus. ")
-    elif bmi <= 34.9:
-        print("Merkittävä ylipaino. ")
-    elif bmi <= 39.9:
-        print("Vaikea ylipaino. ")
-    else:
-        print("Sairaalloinen ylipaino. ")
-else:
-    print("Syötä oikeat tiedot!!")
-
-def laske_askeleet(paino, tavoite):
-    # Olettaen, että kalorivaje 7700 kaloria johtaa 1 kg:n (2,2 lbs) painonpudotukseen
-    kalorivaje = (paino - tavoite) * 7700
+def calculate_steps(weight, target):
+    # Olettaen, että 7000 kaloria johtaa 1 kg:n painonpudotukseen
+    calorie_deficit = (weight - target) * 7000
     # Olettaen, että yksi askel polttaa noin 0,05 kaloria (voi vaihdella yksilöllisten tekijöiden mukaan)
-    kalorit_per_askel = 0.05
+    calories_per_step = 0.05
     # Lasketaan tarvittavat askeleet yhteensä painonpudotustavoitteen saavuttamiseksi
-    kokonais_askeleet = kalorivaje / kalorit_per_askel
-    return kokonais_askeleet
+    total_steps = calorie_deficit / calories_per_step
+    return total_steps
 
-kokonais_askeleet = laske_askeleet(paino, tavoite)
+total_steps = calculate_steps(weight, target)
 
 # Lasketaan arvioidut päivät
-def laske_paivat(kokonais_askeleet, paivittaiset_askeleet):
-    tarvittavat_paivat = kokonais_askeleet / paivittaiset_askeleet
-    return tarvittavat_paivat
+def calculate_days(total_steps, daily_steps):
+    required_days = total_steps / daily_steps
+    return required_days
 
 # Laske arvioidut päivät tavoitteen saavuttamiseksi
-tarvittavat_paivat = laske_paivat(kokonais_askeleet, askeleet_paivassa)
-print("Painonpudotustavoitteesi saavuttamiseksi sinun tulisi kävellä noin {} askelta, joka on {:.1f} päivää, kun kävelet {} askelta.".format(int(kokonais_askeleet), tarvittavat_paivat, askeleet_paivassa))
+required_days = calculate_days(total_steps, steps_per_day)
+print("Painonpudotustavoitteesi saavuttamiseksi sinun tulisi kävellä noin {} askelta, joka on {:.1f} päivää. \n({} askelta per päivä).".format(int(total_steps), required_days, int(steps_per_day)))
+
+
+def calculate_time_to_burn_calories(calories_to_burn, walking_speed_kmh, weight):
+    # MET = Metabolic Equivalent of Task
+    met_value = 4.3
+    
+    # Laske poltetut kalorit tunnissa
+    calories_burned_per_hour = met_value * weight
+    
+    # Laske kalorien polttamiseen tarvittava aika tunteina.
+    time_hours = calories_to_burn / calories_burned_per_hour
+    
+    return time_hours
+
+calories_to_burn = calories
+walking_speed_kmh = 6.0
+
+# Lasketaan tarvittava aika
+time_hours = calculate_time_to_burn_calories(calories_to_burn, walking_speed_kmh, weight)
+
+print("\nSinulla kestää yhteensä noin {:.0f} tuntia polttaa {:.0f} kaloria kävelemällä reippaasti {:.0f} kilometrin tuntivauhdilla!".format(time_hours, calories_to_burn, walking_speed_kmh))
