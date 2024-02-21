@@ -73,7 +73,8 @@ target_weight = abs(weight - target)
 calories = target_weight * 7000
 
 if weight > target:
-    print("Haluat siis laihtua {:.2f} kiloa, joka on arviolta {:.2f} kaloria!\n".format(target_weight, calories))
+    print("Haluat siis laihtua {:.2f} kiloa, joka on arviolta {:.2f} kaloria!".format(target_weight, calories))
+    print("Sinun täytyy siis vähentää energian saantia, tai lisätä liikuntaa {:.2f} kalorin verran.\n".format(calories))
 else:
     print("Haluat nostaa painoasi {:.2f} kiloa, joten ohjelma lopetetaan.".format(target_weight))
     exit()
@@ -91,6 +92,7 @@ while True:
         print("Ole hyvä ja syötä kokonaisluku.")
 
 print("Tavoitteeksi määritetty", steps_per_day, "askelta per päivä!\n")
+
 
 def calculate_steps(weight, target):
     # Olettaen, että 7000 kaloria johtaa 1 kg:n painonpudotukseen
@@ -132,3 +134,56 @@ walking_speed_kmh = 6.0
 time_hours = calculate_time_to_burn_calories(calories_to_burn, walking_speed_kmh, weight)
 
 print("\nSinulla kestää yhteensä noin {:.0f} tuntia polttaa {:.0f} kaloria kävelemällä reippaasti {:.0f} kilometrin tuntivauhdilla!".format(time_hours, calories_to_burn, walking_speed_kmh))
+
+
+# ENERGIANTARVE
+
+while True:
+    try:
+        age = input("Jos haluat laskea energiantarpeesi, niin syötä ikäsi: ").replace(",", ".")
+        age = float(age)
+        if age <= 0:
+            print("Syötä positiivinen kokonaisluku.")
+        else:
+            break
+    except ValueError:
+        print("Ole hyvä ja syötä kokonaisluku.")
+
+print("Iäksi määritettiin", age, ".\n")
+
+def calculate_bmr(weight, height, age):
+    bmr = 10 * weight + 6.25 * height - 5 * age + 5
+    return bmr
+
+def calculate_maintenance_calories(bmr, activity_factor):
+    activity_factors = {
+        1: 1.2,  # Sedentary
+        2: 1.375,  # Lightly active
+        3: 1.55,  # Moderately active
+        4: 1.725,  # Very active
+        5: 1.9  # Extra active
+    }
+    maintenance_calories = bmr * activity_factors.get(activity_factor, 1.2)
+    return maintenance_calories
+
+print("Valitse aktiivisuustasosi:")
+print("1. Istumatyö (vähän tai ei lainkaan.)")
+print("2. Kevyt liikunta (1-3 kertaa viikossa.)")
+print("3. Kohtalainen (3-5 kertaa viikossa.)")
+print("4. Erittäin aktiivinen (6-7 kertaa viikossa.)")
+print("5. +7 kertaa viikossa!")
+activity_factor = int(input("Syötä aktiivisuustasoasi vastaava luku:  "))
+
+# YLLÄPITOKALORIT
+bmr = calculate_bmr(weight, height, age)
+maintenance_calories = calculate_maintenance_calories(bmr, activity_factor)
+print("\nYlläpitokalorisi ovat: {} kaloria. Eli jos syöt alle tämän, niin suuntaat kohti tavoitettasi!".format(maintenance_calories))
+
+defecit = maintenance_calories - 500
+defgoal = calories_to_burn / 500
+
+print("Esimerkiksi 500 kilokalorin energiavajeella saisit syödä päivässä yhteensä {} kaloria, ja sitä tulisi jatkaa {:.0f} päivää, jotta pääset tavoitteeseesi.".format(defecit, defgoal))
+
+add_all_burned = 0.05 * steps_per_day + 500
+total_calories_burned = calories_to_burn / add_all_burned
+print("Mikäli kuitenkin lisäät askelia {:.0f}, ja vähennät energiansaantia 500 kilokaloria, saavutat tavoitteesi {:.0f} päivässä! \n".format(steps_per_day, total_calories_burned))
