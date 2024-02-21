@@ -179,11 +179,13 @@ bmr = calculate_bmr(weight, height, age)
 maintenance_calories = calculate_maintenance_calories(bmr, activity_factor)
 print("\nYlläpitokalorisi ovat: {} kaloria. Eli jos syöt alle tämän, niin suuntaat kohti tavoitettasi!".format(maintenance_calories))
 
-defecit = maintenance_calories - 500
-defgoal = calories_to_burn / 500
+defecit = 500
+calories_per_step = 0.05
+defecitall = maintenance_calories - defecit
+defgoal = calories_to_burn / defecit
 
-print("Esimerkiksi 500 kilokalorin energiavajeella saisit syödä päivässä yhteensä {} kaloria, ja sitä tulisi jatkaa {:.0f} päivää, jotta pääset tavoitteeseesi.".format(defecit, defgoal))
+print("Esimerkiksi 500 kilokalorin energiavajeella saisit syödä päivässä yhteensä {} kaloria, ja sitä tulisi jatkaa {:.0f} päivää, jotta pääset tavoitteeseesi.".format(defecitall, defgoal))
 
-add_all_burned = 0.05 * steps_per_day + 500
+add_all_burned = calories_per_step * steps_per_day + defecit
 total_calories_burned = calories_to_burn / add_all_burned
 print("Mikäli kuitenkin lisäät askelia {:.0f}, ja vähennät energiansaantia 500 kilokaloria, saavutat tavoitteesi {:.0f} päivässä! \n".format(steps_per_day, total_calories_burned))
